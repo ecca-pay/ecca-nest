@@ -1,4 +1,4 @@
-import { Controller, Get, Request, UseGuards } from '@nestjs/common';
+import { Controller, Get, Request, UseGuards, Headers } from '@nestjs/common';
 import { AuthGuard, AuthService, Session } from '@thallesp/nestjs-better-auth';
 import { Public } from '@thallesp/nestjs-better-auth';
 import type { Request as ExpressRequest } from 'express';
@@ -11,10 +11,12 @@ export class UserController {
   constructor(private authService: AuthService<typeof auth>) {}
 
   @Get('me')
-  getProfile(@Session() session: UserSession) {
+  getProfile(@Session() session: UserSession, @Headers('authorization') authHeader?: string) {
+    // Handle both Cookie and Bearer token
+    console.log("Auth header:", authHeader);
+    console.log("Session:", session);
     return session;
   }
-
   @Get('public')
   @Public()
   publicRoute() {
