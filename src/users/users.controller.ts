@@ -7,7 +7,6 @@ import { fromNodeHeaders } from 'better-auth/node';
 import type { UserSession } from '@thallesp/nestjs-better-auth';
 
 @Controller('users')
-// @UseGuards(AuthGuard) // Apply to all routes in this controller
 export class UserController {
   constructor(private authService: AuthService<typeof auth>) {}
 
@@ -17,7 +16,7 @@ export class UserController {
   }
 
   @Get('public')
-  @Public() // Mark this route as public (no authentication required)
+  @Public()
   publicRoute() {
     return { message: 'This route is public' };
   }
